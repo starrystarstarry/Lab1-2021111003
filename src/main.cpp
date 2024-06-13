@@ -1,16 +1,6 @@
 // Copyright 2024.6.11
-#include <fstream>
-#include <iostream>
-#include <limits>
-
-#include "graph.h"
 #include "readFile.h"
-
-using namespace std;
-// hi?
-// sdai
-// dasijdok
-/**saafas*/
+#include "graph.h"
 int main(int argc, char const *argv[]) {
     map<string, int> map1;
     map<int, string> map2;
@@ -44,8 +34,6 @@ int main(int argc, char const *argv[]) {
                 cout << result << endl;
                 break;
             case 3:
-                // cin.clear();
-                // fflush(stdin);
                 cout << "Please enter text" << endl;
                 getchar();
 
@@ -77,8 +65,8 @@ int main(int argc, char const *argv[]) {
                 goto label;
             default:
                 cout << "Invalid Action" << endl;
-                cin.clear();   // ?????¨ª?¨®¡À¨º??
-                cin.ignore();  // ?????¨ª?¨®???????¡À??????????¡¤?
+                cin.clear();
+                cin.ignore();
                 getline(cin, word1);
                 break;
         }

@@ -1,10 +1,5 @@
 // Copyright 2024.6.11
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <string>
-using namespace std;
+#include "readFile.h"
 void preHandleStr(string &str) {
     int len = str.size();
     for (int i = 0; i < len; i++) {

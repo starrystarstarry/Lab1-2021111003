@@ -3,16 +3,7 @@
 
 #include <limits.h>
 
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
 #include "readFile.h"
-using std::cout;
-using std::endl;
 // 构造函数
 Graph::Graph(string str, map<string, int> const _map1, map<int, string> const _map2) {
     len = 0;
@@ -33,6 +24,7 @@ void Graph::showStr() {
     }
     cout << endl;
 }
+
 void Graph::showGraph() {
     for (int i = 0; i < this->size; i++) {
         for (int j = 0; j < this->size; j++) {
@@ -102,7 +94,7 @@ string Graph::queryBridgeWords(string word1, string word2) {
         s = s + "No" + " '" + word2 + "' in the graph!";
     } else {
         // 存在word1与word2，查询图
-        s = findMiddleWord(map1[word1], map1[word2], 1);
+        s = findMiddleWord(map1[word1], map1[word2], 2);
     }
     return s;
 }
@@ -147,9 +139,23 @@ string Graph::findMiddleWord(int firstword, int secondword, int choice) {
             }
             break;
         }
+        case 2: {
+            if (flag == 0) {
+                resultStr = " ";
+            } else {
+                int count = 0;
+                for (size_t i = 0; i < resultStr.size(); i++) {
+                    if (resultStr[i] == ',') {
+                        resultStr[i] = ' ';
+                        count++;
+                    }
+                }
+            }
+        }
     }
     return resultStr;
 }
+
 string Graph::chooseOne(string str, int len) {
     srand(static_cast<unsigned int>(time(nullptr)));
     int random_number = (rand()) % len;
@@ -198,7 +204,7 @@ string Graph::generateNewText(string inputText) {
 }
 
 // 最短路径计算
-void Graph::calcShortestPath(string startWord, string endWord) {
+string Graph::calcShortestPath(string startWord, string endWord) {
     string resultStr = "";
     vector<vector<int>> allPaths;
     vector<int> path;
@@ -206,9 +212,11 @@ void Graph::calcShortestPath(string startWord, string endWord) {
         if (!endWord.empty()) {
             resultStr += "There is no word named " + startWord + " or " + endWord;
             cout << resultStr << endl;
+            return resultStr;
         } else {
             resultStr += "There is no word named " + startWord;
             cout << resultStr << endl;
+            return resultStr;
         }
     } else if (endWord.empty()) {  // 只输入了一个单词
         for (int j = 0; j < size; j++) {
@@ -236,19 +244,24 @@ void Graph::calcShortestPath(string startWord, string endWord) {
     } else {  // 输入了两个单词
         dijkstra(map1[startWord], map1[endWord], allPaths, path);
         cout << "The shortest path from " << startWord << " to " << endWord << " : ";
+        resultStr = "The shortest path from " + startWord + " to " + endWord + ":";
         if (allPaths.empty()) {
             resultStr = "Do not have a path from " + startWord + " to " + endWord;
             cout << resultStr << endl;
+            return resultStr;
         } else {
             for (const auto& p : allPaths) {
                 for (size_t i = 0; i < p.size(); ++i) {
+                    resultStr += map2[p[i]];
                     cout << map2[p[i]];
                     if (map1[endWord] != p[i]) {
                         cout << " -> ";
+                        resultStr += "->";
                     }
                 }
                 cout << endl;
             }
+            return resultStr;
         }
     }
 }
